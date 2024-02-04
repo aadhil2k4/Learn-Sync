@@ -1,6 +1,7 @@
 // Dependencies
 const express = require('express');
 const cors = require('cors');
+const main_router = require("../Backend/Main_Routes");
 require('dotenv').config();
 
 
@@ -8,6 +9,10 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+
+// Configure Main Router
+app.use("/", main_router);
 
 
 
@@ -18,8 +23,8 @@ app.get("/test", (req, res) => {
 
 
 
-const port = process.env.SERVER_PORT || 5000;
 // Server Setup
+const port = process.env.SERVER_PORT || 5000;
 app.listen(port, (err) => {
     if(err) console.log(err);
     else console.log("Server Is Listening on Port 8080");
