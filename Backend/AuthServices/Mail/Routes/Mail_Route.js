@@ -6,4 +6,8 @@ router.post("/welcome", (req, res) => {
     Mail_Controller.Welcome_Controller(req, res);
 })
 
+router.post("/SignUpOTP", (req, res) => {
+    Mail_Controller.SignUp_OTP_Controller(req, res);
+})
+
 module.exports = router;

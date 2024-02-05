@@ -1,5 +1,6 @@
 const mail = require('nodemailer');
 const welcome_mail_templte = require("../Templates/Welcome");
+const SignUp_OTP_mail_template = require("../Templates/SignUp_OTP");
 let mailOptions;
 let responseCode = 200;
 let responseBody = "";
@@ -24,7 +25,7 @@ const mailServices = {
 
         try {
             transporter.sendMail(mailOptions);
-            responseBody = "Mail Sent Successfully";
+            responseBody = "Welcome Mail Sent Successfully";
         } catch (error) {
             console.log(error);
             responseCode = 100;
@@ -35,6 +36,30 @@ const mailServices = {
             responseCode,
             responseBody
         };
+        return response;
+    },
+
+    SingUp_OTP_Mail : async(otp, user_mail, user_name) => {
+        mailOptions = {
+            from: 'naganathan1555@gmail.com',
+            to: user_mail,
+            subject: 'Learn-Sync :: OTP for User Verification',
+            html: SignUp_OTP_mail_template(otp, user_name)
+        };
+
+        try {
+            transporter.sendMail(mailOptions);
+            responseBody = "OTP Mail for Sign Up sent Successfully"
+        } catch (error) {
+            console.log(error);
+            responseCode = 100;
+            responseBody = error;
+        }
+
+        const response = {
+            responseCode,
+            responseBody
+        }
         return response;
     }
 }

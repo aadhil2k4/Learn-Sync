@@ -14,7 +14,20 @@ app.use(cors());
 // Configure Main Router
 app.use("/", main_router);
 
+const mongoose = require('mongoose');
+const User = require('../Backend/Model/Users');
 
+try {
+    mongoose.connect("mongodb://localhost:27017");
+    console.log("Connected To MongoDB");
+} catch (err) {
+    console.error(err);
+}
+
+app.get("/dbtest", async (req, res) => {
+    const user = await User.insertMany({ User_Name: "Nagu", User_Mail: "umaiyalramesh@gmail.com", Password: "SomeFuck"});
+    res.status(200).send("Check DB");
+})
 
 // Server Testing
 app.get("/test", (req, res) => {

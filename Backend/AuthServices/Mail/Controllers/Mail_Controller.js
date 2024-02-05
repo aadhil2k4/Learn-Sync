@@ -1,4 +1,5 @@
 const mail_services = require("../Modules/Mail_Module");
+const Generate_OTP = require('../../../OTP/OTP_Generator');
 
 const mail_controller = {
     Welcome_Controller : async(req, res) => {
@@ -9,6 +10,29 @@ const mail_controller = {
         }
         else{
             res.status(404).json({message: "Server Error in Sending Email !!"});
+        }
+    },
+
+    SignUp_OTP_Controller : async(req, res) => {
+        const { User_Mail, User_Name } = req.body;
+        const otp = Generate_OTP(User_Name, User_Mail)
+        if(otp == "User Not Found 404 !!"){
+            res.status(404).json({message: "User Not Found 404 !!"});
+        }
+        else if(otp == "Account Blocked. Try after Some Time !!"){
+            res.status(100).json({message: "Account Blocked. Try after Some Time !!"});
+        }
+        else if(otp == "Minimum 1 Minute Gap Required Between OTP Requests"){
+            res.status(100).json({message: "Minimum 1 Minute Gap Required Between OTP Requests"});
+        }
+        else{
+            const SignUp_OTP_Mail_response = await mail_services.SingUp_OTP_Mail(otp, User_Mail, User_Name)
+            if(SignUp_OTP_Mail_response.responseCode == 200){
+                res.status(200).json({message: "OTP Mail Sent Successfully"});
+            }
+            else{
+                res.status(404).json({message: "Email ID Invalid"});
+            }
         }
     }
 }
