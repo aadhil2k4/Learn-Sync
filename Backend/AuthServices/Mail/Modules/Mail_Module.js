@@ -1,6 +1,7 @@
 const mail = require('nodemailer');
 const welcome_mail_templte = require("../Templates/Welcome");
 const SignUp_OTP_mail_template = require("../Templates/SignUp_OTP");
+const Pass_Reset_OTP_mail_template = require('../Templates/Pass_Reset');
 let mailOptions;
 let responseCode = 200;
 let responseBody = "";
@@ -39,7 +40,7 @@ const mailServices = {
         return response;
     },
 
-    SingUp_OTP_Mail : async(otp, user_mail, user_name) => {
+    SignUp_OTP_Mail : async(otp, user_mail, user_name) => {
         mailOptions = {
             from: 'naganathan1555@gmail.com',
             to: user_mail,
@@ -60,6 +61,30 @@ const mailServices = {
             responseCode,
             responseBody
         }
+        return response;
+    },
+
+    Pass_Reset_OTP_Mail : async(otp, user_mail, user_name) => {
+        mailOptions = {
+            from: 'naganathan1555@gmail.com',
+            to: user_mail,
+            subject: 'Learn Sync :: OTP for Password Reset',
+            html: Pass_Reset_OTP_mail_template(otp, user_name)
+        };
+
+        try {
+            transporter.sendMail(mailOptions);
+            responseBody = "OTP for Password Reset Sent Successfully"
+        } catch (error) {
+            console.log(error);
+            responseCode = 100;
+            responseBody = error;
+        }
+
+        const response = {
+            responseCode,
+            responseBody
+        };
         return response;
     }
 }

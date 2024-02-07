@@ -3,6 +3,7 @@ const User = require('../Model/Users');
 
 const generateOTP = async (user_name, user_mail) => {
     const OTP = Math.floor(1000 + Math.random() * 9000).toString();
+    console.log(OTP);
     try {
         const user = await User.findOne({ User_Name: user_name, User_Mail: user_mail});
 
@@ -35,6 +36,8 @@ const generateOTP = async (user_name, user_mail) => {
         user.OTP = OTP;
         user.OTP_Created_Time = currentTime;
         user.OTP_Attempts += 1;
+
+        user.save();
 
       } catch (err) {
         console.error(err);
