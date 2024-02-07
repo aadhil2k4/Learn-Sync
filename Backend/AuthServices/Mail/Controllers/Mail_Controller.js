@@ -51,6 +51,17 @@ const mail_controller = {
                 res.status(404).json({message: "Email ID Invalid"});
             }
         }
+    },
+
+    Sucessfull_Group_Join_Controller : async(req, res) => {
+        const { Group_Name, User_Mail, User_Name } = req.body;
+        const Successful_Group_Join_Mail_response = await mail_services.Successfull_Group_Join_Mail(Group_Name, User_Mail, User_Name);
+        if(Successful_Group_Join_Mail_response.responseCode == 200){
+            res.status(200).json({message: "Successful Group Join Mail Sent Successfully"});
+        }
+        else{
+            res.status(404).json({message: "Mail Not Sent !!"});
+        }
     }
 }
 

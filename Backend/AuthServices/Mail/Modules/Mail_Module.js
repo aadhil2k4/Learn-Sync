@@ -2,6 +2,7 @@ const mail = require('nodemailer');
 const welcome_mail_templte = require("../Templates/Welcome");
 const SignUp_OTP_mail_template = require("../Templates/SignUp_OTP");
 const Pass_Reset_OTP_mail_template = require('../Templates/Pass_Reset');
+const Successfull_Group_Join_mail_template = require('../Templates/Successfull_Group_Join');
 let mailOptions;
 let responseCode = 200;
 let responseBody = "";
@@ -75,6 +76,30 @@ const mailServices = {
         try {
             transporter.sendMail(mailOptions);
             responseBody = "OTP for Password Reset Sent Successfully"
+        } catch (error) {
+            console.log(error);
+            responseCode = 100;
+            responseBody = error;
+        }
+
+        const response = {
+            responseCode,
+            responseBody
+        };
+        return response;
+    },
+
+    Successfull_Group_Join_Mail : async(group_name, user_mail, user_name) => {
+        mailOptions = {
+            from: 'naganathan1555@gmail.com',
+            to: user_mail,
+            subject: 'Learn Sync :: Successfull Group Join',
+            html: Successfull_Group_Join_mail_template(group_name, user_name)
+        };
+
+        try {
+            transporter.sendMail(mailOptions);
+            responseBody = "Acknowledgement Mail for Successful Group Join Sent"
         } catch (error) {
             console.log(error);
             responseCode = 100;

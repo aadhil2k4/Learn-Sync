@@ -14,4 +14,8 @@ router.post("/PassResetOTP", (req, res) => {
     Mail_Controller.Pass_Reset_OTP_Controller(req, res);
 })
 
+router.post("/groupjoin", (req, res) => {
+    Mail_Controller.Sucessfull_Group_Join_Controller(req, res);
+})
+
 module.exports = router;
