@@ -1,4 +1,4 @@
-const Notes = require('../../Model/Notes');
+const Notes = require('../Model/Notes');
 
 const Create_Notes = async(notes_Id, user_Id, notes_Name) => {
     let responseCode = 200;

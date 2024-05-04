@@ -1,5 +1,5 @@
 const mail_services = require("../Modules/Mail_Module");
-const Generate_OTP = require('../../../OTP/OTP_Generator');
+const Generate_OTP = require('../Middlewares/OTP_Generator');
 
 const mail_controller = {
     Welcome_Controller : async(req, res) => {
